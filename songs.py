@@ -52,10 +52,19 @@ def main():
         print (menu)
 
     elif menu == '4':
+        db = client.songs
+        collection = client.songlist
+        for song in db.songlist.find({'medium':'Electric'}):
+            print (song)
         print ('Thanks')
         print (menu)
 
     elif menu == '5':
+        db = client.songs
+        collection = client.songlist
+        for song in db.songlist.find({'medium':'Acoustic'}):
+            print (song)
+
         print ('Thanks')
         print (menu)
 
@@ -63,7 +72,7 @@ def main():
       
         db = client.songs
         for song in db.songlist.find():
-            pprint.pprint(song)
+            print (song)
     else: 
         print ('Invalid selection.')
 
