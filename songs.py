@@ -47,7 +47,8 @@ def main():
         writer_input = input ()
         db = client.songs
         collection = client.songlist
-        print ('Thanks')
+        for song in db.songlist.find({'writer':writer_input}):
+            print (song)
         print (menu)
 
     elif menu == '4':
