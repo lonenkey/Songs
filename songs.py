@@ -1,6 +1,8 @@
 #/usr/bin/python3
 import pymongo
+import pprint
 from pymongo import MongoClient
+
 client = MongoClient()
 
    
@@ -50,11 +52,13 @@ def main():
         print (menu)
     elif menu == '6':
       
-        db = client['songs']
-        col = db.songs
-        cur = col.find()
-        for doc in cur:
-            print (doc)
+        db = client.songs
+        for song in db.songs.find():
+            pprint.pprint(song)
+##        col = db.songs
+##       cur = col.find()
+##        for doc in cur:
+##            print (doc)
     else: 
         print ('Invalid selection.')
 
