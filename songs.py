@@ -2,7 +2,7 @@
 import pymongo
 from pymongo import MongoClient
 client = MongoClient
-
+#test
    
 def insert_in_db (insert_name, insert_writer, insert_medium):
    db = client['songs']
