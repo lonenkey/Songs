@@ -8,7 +8,7 @@ client = MongoClient()
    
 def insert_in_db (insert_name, insert_writer, insert_medium):
     db = client.songs
-    db.songs.insert ({'name':insert_name, 'writer':insert_writer, 'medium':insert_medium})
+    db.songlist.insert ({'name':insert_name, 'writer':insert_writer, 'medium':insert_medium})
     print(insert_name, insert_writer, insert_medium,' are inserted into.',db)
 
 def main():
@@ -39,10 +39,14 @@ def main():
         name_input = input()
       
         db = client.songs
-        info = db.songs.find_one({"name":name_input})
+        info = db.songlist.find_one({"name":name_input})
         print (info)
 
     elif menu == '3':
+        print ('Enter the songwriters name')
+        writer_input = input ()
+        db = client.songs
+        collection = client.songlist
         print ('Thanks')
         print (menu)
 
@@ -57,7 +61,7 @@ def main():
     elif menu == '6':
       
         db = client.songs
-        for song in db.songs.find():
+        for song in db.songlist.find():
             pprint.pprint(song)
     else: 
         print ('Invalid selection.')
