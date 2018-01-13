@@ -22,6 +22,7 @@ def main():
     print ('6:  List all songs')
 
     menu = input ()
+
     if menu == '1':
         print ('Enter song title')
         name_input = input ()
@@ -38,27 +39,26 @@ def main():
         name_input = input()
       
         db = client.songs
-        col = db.songs
-##        info = db.songs.find( { $text: { $search: name_input} } )
+        info = db.songs.find_one({"name":name_input})
         print (info)
+
     elif menu == '3':
         print ('Thanks')
         print (menu)
+
     elif menu == '4':
         print ('Thanks')
         print (menu)
+
     elif menu == '5':
         print ('Thanks')
         print (menu)
+
     elif menu == '6':
       
         db = client.songs
         for song in db.songs.find():
             pprint.pprint(song)
-##        col = db.songs
-##       cur = col.find()
-##        for doc in cur:
-##            print (doc)
     else: 
         print ('Invalid selection.')
 
