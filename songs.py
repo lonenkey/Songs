@@ -2,6 +2,7 @@
 import pymongo
 import pprint
 import os
+import re
 from pymongo import MongoClient
 
 client = MongoClient()
@@ -26,6 +27,7 @@ def main():
         print ('4:  List all electric guitar songs')
         print ('5:  List all acousic guitar songs')
         print ('6:  List all songs')
+        print ('7:  Total number of songs')
         print ('q:  To quit')
 
         menu = input ()
@@ -50,7 +52,7 @@ def main():
             name_input = input()
             db = client.songs
             collection = client.songlist
-            by_title = db.songlist.find({'name':name_input})
+            by_title = db.songlist.find({'name':{'$regex':'.*' + name_input + '.*','$options': 'i'}})
             for song in by_title:
                 pprint.pprint (song['name'] + ' (by ' + song['writer'] + ', on ' + song['medium'] + ')')
             print (' ')
@@ -62,7 +64,7 @@ def main():
             writer_input = input ()
             db = client.songs
             collection = client.songlist
-            by_songwriter = db.songlist.find({'writer':writer_input})
+            by_songwriter = db.songlist.find({'writer':{'$regex':'.*' + writer_input + '.*' ,'$options':'i'}})
             for song in by_songwriter:
                 pprint.pprint (song['name'] + ' (by ' + song['writer'] + ', on ' + song['medium'] + ')')
             print (' ')
@@ -72,7 +74,7 @@ def main():
         elif menu == '4':
             db = client.songs
             collection = client.songlist
-            all_electric = db.songlist.find({'medium':'Electric'})
+            all_electric = db.songlist.find({'medium':{'$regex': '.*' + 'E' + '.*','$options':'i'}})
             for song in all_electric:
                 pprint.pprint (song['name'] + ' (by ' + song['writer'] + ')')
             print (' ')
@@ -82,7 +84,7 @@ def main():
         elif menu == '5':
             db = client.songs
             collection = client.songlist
-            all_acoustic = db.songlist.find({'medium':'Acoustic'})
+            all_acoustic = db.songlist.find({'medium':{'$regex':'.*'+'A'+'.*','$options':'i'}})
             for song in all_acoustic:
                 pprint.pprint (song['name'] + ' (by ' + song['writer'] + ')')
             print (' ')
@@ -90,7 +92,6 @@ def main():
             menu = input ()
 
         elif menu == '6':
-      
             db = client.songs
             full_list = db.songlist.find()
             for song in full_list:
@@ -99,11 +100,21 @@ def main():
             print ('Press enter to continue, q to quit')
             menu = input ()
 
+        elif menu == '7':
+            db = client.songs
+            song_count = db.songlist.find().count()
+            print ('There are ', song_count, ' songs in the database.')
+            print (' ')
+            print ('Press enter to continue, q to quit')
+            menu = input ()
+
         elif menu == 'q':
-            print ('Good Bye')
-        
+            print (' ')
+
         else: 
             print ('Invalid selection.')
-
+            print (' ')
+            print ('Press enter to continue, q to quit')
+            menu = input ()
 
 main()
