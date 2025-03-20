@@ -11,7 +11,7 @@ menu = '0'
    
 def insert_in_db (insert_name, insert_writer, insert_medium):
     db = client.songs
-    db.songlist.insert ({'name':insert_name, 'writer':insert_writer, 'medium':insert_medium})
+    db.songlist.insert_one ({'name':insert_name, 'writer':insert_writer, 'medium':insert_medium})
     print(insert_name, insert_writer, insert_medium,' are inserted into.',db)
 
 def main(): 
